@@ -9,28 +9,15 @@ import { BookMark } from "@/lib/actions";
 import Display from "@/components/Display";
 import SearchInput from "@/components/SearchInput";
 
-export default async function Home() {
+export default async function TvPage() {
   const user = await getCurrentUser();
 
   if (!user) {
     redirect("/signup");
   }
-  const recommended: (Media & { users: User[] })[] =
-    await prisma.media.findMany({
-      where: {
-        isTrending: false,
-      },
-      include: {
-        users: {
-          where: {
-            id: user.id,
-          },
-        },
-      },
-    });
-  const trending: (Media & { users: User[] })[] = await prisma.media.findMany({
+  const tv: (Media & { users: User[] })[] = await prisma.media.findMany({
     where: {
-      isTrending: true,
+      category: "TV Series",
     },
     include: {
       users: {
@@ -40,7 +27,6 @@ export default async function Home() {
       },
     },
   });
-
   return (
     <pre>
       <Link href="/api/auth/signout">
@@ -60,16 +46,9 @@ export default async function Home() {
       <SearchInput q="" />
       <br />
       <hr />
-      <h1>Trending</h1>
+      <h1>TV Series</h1>
       <Display
-        media={trending as (Media & { users: User[] })[]}
-        user={user}
-        BookMark={BookMark}
-      />
-      <hr />
-      <h1>Recommended</h1>
-      <Display
-        media={recommended as (Media & { users: User[] })[]}
+        media={tv as (Media & { users: User[] })[]}
         user={user}
         BookMark={BookMark}
       />
