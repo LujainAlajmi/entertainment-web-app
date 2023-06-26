@@ -16,12 +16,12 @@ export const Button = ({
   const { pending } = useFormStatus();
   return (
     <button
+      className={className}
       type="submit"
-      className=" bg-blue-800"
       disabled={pending}
       formAction={formAction}
     >
-      {pending ? "pending" : children}
+      {children}
     </button>
   );
 };

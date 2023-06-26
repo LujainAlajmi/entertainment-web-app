@@ -14,7 +14,7 @@ export default async function QPage({
 
   return (
     <div>
-      <SearchInput q={q} />
+      <SearchInput q={q} placeholder="Search for movies or TV series" />
       <Display
         media={data as (Media & { users: User[] })[]}
         user={user}

@@ -46,24 +46,9 @@ export default async function BookMarkPage() {
   const bookmarkMovie = Movie.filter((movie) => movie.users.length > 0);
 
   return (
-    <pre>
-      <Link href="/api/auth/signout">
-        <h1>Sign out</h1>
-      </Link>
-      <Link href="/movies">
-        <h1>movies</h1>
-      </Link>
-      <Link href="/tv">
-        <h1>tv</h1>
-      </Link>
-      <Link href="/bookmark">
-        <h1>bookmark</h1>
-      </Link>
-      <hr />
-      <h1>Search</h1>
-      <SearchInput q="" />
-      <br />
-      <hr />
+    <div>
+      <SearchInput q="" placeholder="Search for bookmarked shows" />
+
       <h1>Bookmarked Movies</h1>
       <Display
         media={bookmarkMovie as (Media & { users: User[] })[]}
@@ -77,6 +62,6 @@ export default async function BookMarkPage() {
         user={user}
         BookMark={BookMark}
       />
-    </pre>
+    </div>
   );
 }

@@ -28,31 +28,15 @@ export default async function MoviesPage() {
     },
   });
   return (
-    <pre>
-      <Link href="/api/auth/signout">
-        <h1>Sign out</h1>
-      </Link>
-      <Link href="/movies">
-        <h1>movies</h1>
-      </Link>
-      <Link href="/tv">
-        <h1>tv</h1>
-      </Link>
+    <div>
+      <SearchInput q="" placeholder="Search for movies" />
 
-      <Link href="/bookmark">
-        <h1>bookmark</h1>
-      </Link>
-      <hr />
-      <h1>Search</h1>
-      <SearchInput q="" />
-      <br />
-      <hr />
       <h1>TV Series</h1>
       <Display
         media={movie as (Media & { users: User[] })[]}
         user={user}
         BookMark={BookMark}
       />
-    </pre>
+    </div>
   );
 }

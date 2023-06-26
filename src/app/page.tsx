@@ -8,6 +8,8 @@ import { redirect } from "next/navigation";
 import { BookMark } from "@/lib/actions";
 import Display from "@/components/Display";
 import SearchInput from "@/components/SearchInput";
+import ScrollCard from "@/components/ScrollCard";
+import MediaCard from "@/components/MediaCard";
 
 export default async function Home() {
   const user = await getCurrentUser();
@@ -41,38 +43,39 @@ export default async function Home() {
     },
   });
 
+  const data = await prisma.media.findMany({});
+
   return (
-    <pre>
-      <Link href="/api/auth/signout">
-        <h1>Sign out</h1>
-      </Link>
-      <Link href="/movies">
-        <h1>movies</h1>
-      </Link>
-      <Link href="/tv">
-        <h1>tv</h1>
-      </Link>
-      <Link href="/bookmark">
-        <h1>bookmark</h1>
-      </Link>
-      <hr />
-      <h1>Search</h1>
-      <SearchInput q="" />
-      <br />
-      <hr />
-      <h1>Trending</h1>
-      <Display
-        media={trending as (Media & { users: User[] })[]}
-        user={user}
-        BookMark={BookMark}
-      />
-      <hr />
-      <h1>Recommended</h1>
-      <Display
-        media={recommended as (Media & { users: User[] })[]}
-        user={user}
-        BookMark={BookMark}
-      />
-    </pre>
+    <div>
+      <SearchInput q="" placeholder="Search for movies or TV series" />
+
+      <h1 className=" pt-3 text-xl font-light text-white md:text-3xl  ">
+        Trending
+      </h1>
+      <div className=" flex w-full snap-x snap-proximity flex-row space-x-4 overflow-x-scroll scroll-smooth py-4 md:space-x-10 md:py-6">
+        {trending.map((media) => (
+          <ScrollCard
+            media={media as Media & { users: User[] }}
+            key={media.id}
+            user={user}
+            BookMark={BookMark}
+          />
+        ))}
+      </div>
+
+      <h1 className=" py-6 text-xl font-light text-white md:text-3xl">
+        Recommended for you
+      </h1>
+      <div className=" columns-2 gap-4 space-y-4 md:columns-3 md:gap-7 md:space-y-6 lg:columns-4 lg:gap-10 lg:space-y-8 ">
+        {recommended.map((media) => (
+          <MediaCard
+            key={media.id}
+            media={media as Media & { users: User[] }}
+            user={user}
+            BookMark={BookMark}
+          />
+        ))}
+      </div>
+    </div>
   );
 }
