@@ -6,7 +6,7 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { BookMark } from "@/lib/actions";
-import Display from "@/components/Display";
+
 import SearchInput from "@/components/SearchInput";
 import ScrollCard from "@/components/ScrollCard";
 import MediaCard from "@/components/MediaCard";
@@ -43,8 +43,6 @@ export default async function Home() {
     },
   });
 
-  const data = await prisma.media.findMany({});
-
   return (
     <div>
       <SearchInput q="" placeholder="Search for movies or TV series" />
@@ -66,7 +64,7 @@ export default async function Home() {
       <h1 className=" py-6 text-xl font-light text-white md:text-3xl">
         Recommended for you
       </h1>
-      <div className=" columns-2 gap-4 space-y-4 md:columns-3 md:gap-7 md:space-y-6 lg:columns-4 lg:gap-10 lg:space-y-8 ">
+      <div className=" grid grid-cols-2 gap-4 md:grid-cols-3  md:gap-8 lg:grid-cols-4 lg:gap-10 ">
         {recommended.map((media) => (
           <MediaCard
             key={media.id}

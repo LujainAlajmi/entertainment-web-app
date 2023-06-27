@@ -6,8 +6,9 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 
 import { BookMark } from "@/lib/actions";
-import Display from "@/components/Display";
+
 import SearchInput from "@/components/SearchInput";
+import MediaCard from "@/components/MediaCard";
 
 export default async function MoviesPage() {
   const user = await getCurrentUser();
@@ -31,12 +32,19 @@ export default async function MoviesPage() {
     <div>
       <SearchInput q="" placeholder="Search for movies" />
 
-      <h1>TV Series</h1>
-      <Display
-        media={movie as (Media & { users: User[] })[]}
-        user={user}
-        BookMark={BookMark}
-      />
+      <h1 className=" py-6 text-xl font-light text-white md:text-3xl">
+        Movies
+      </h1>
+      <div className=" grid grid-cols-2 gap-4 md:grid-cols-3  md:gap-8 lg:grid-cols-4 lg:gap-10">
+        {movie.map((media) => (
+          <MediaCard
+            key={media.id}
+            media={media as Media & { users: User[] }}
+            user={user}
+            BookMark={BookMark}
+          />
+        ))}
+      </div>
     </div>
   );
 }

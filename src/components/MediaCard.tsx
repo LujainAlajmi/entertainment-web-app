@@ -80,7 +80,7 @@ export default function MediaCard({
           </div>
         </div>
       </div>
-      <div className=" h-1/2 w-full">
+      <div className="  w-full">
         <div className="h-full w-full ">
           <div className="flex h-full w-full flex-col justify-end pt-2">
             <div>
